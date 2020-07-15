@@ -13,12 +13,12 @@ class CarTableViewCell: UITableViewCell {
     
 
     
-    var car : (make: String, horsepower: Int, price: Int, image: UIImage)? {
+    var car : [Any]? {
         didSet {
-            carImage.image = car?.image
-            carName.text = car?.make
+            carImage.image = car?[3] as! UIImage
+            carName.text = car?[0] as! String
 
-            if let price = car?.price{
+            if let price = car?[1] as? Int {
                 carPrice.text = "$\(price)"
             }
         }

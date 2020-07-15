@@ -9,12 +9,18 @@
 import UIKit
 import Foundation
 
+protocol carsDelegate: class {
+    func modifyCars(image: UIImage?, index: Int?, section: Int?)
+}
+
 class CarsDetailViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     var name: String?
     var image: UIImage?
     var price: Int?
     var horsepower: Int?
-    
+    var selectionDelegate: carsDelegate!
+    var index: Int?
+    var section: Int?
     private let carImageView:UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -95,6 +101,12 @@ class CarsDetailViewController: UIViewController, UIImagePickerControllerDelegat
         }
         // print out the image size as a test
         carImageView.image = image
+        
+        
+        // delegate methods to change the image of the car
+        guard let name = titleLabel.text else {return}
+        guard let newImage: UIImage = image else {return}
+        selectionDelegate.modifyCars(image: newImage, index: index, section: section)
         
         print(image.size)
     }
